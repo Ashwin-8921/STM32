@@ -11,14 +11,12 @@ uint8_t tx_buffer[10] = {10, 20, 40, 50, 60, 70, 90, 90, 100, 110}; // Data to s
 uint8_t rx_buffer[10]; // Buffer to store received data
 
 void SystemClock_Config(void);     // Configures system clock source and speed
-static void MX_GPIO_Init(void);    // Initializes all required GPIO pins
 static void MX_SPI1_Init(void);    // Initializes SPI1 for master mode operation
 
 int main(void)
 {
   HAL_Init();                 // Initialize HAL library
   SystemClock_Config();       // Configure system clock
-  MX_GPIO_Init();             // Initialize GPIO pins
   MX_SPI1_Init();             // Initialize SPI1
 
   // Send tx_buffer and receive into rx_buffer using SPI1
@@ -78,24 +76,6 @@ static void MX_SPI1_Init(void) // Configures SPI1 in master mode, 8-bit, full-du
 }
 
 
-
-static void MX_GPIO_Init(void) // Configures GPIO clocks and sets PB6 as output
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
-
-  GPIO_InitStruct.Pin = GPIO_PIN_6;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-}
 
 void Error_Handler(void) // Stops execution if an error occurs
 {
