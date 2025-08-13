@@ -5,7 +5,7 @@
 #include "main.h"
 
 SPI_HandleTypeDef hspi1;   // SPI1 handle
-UART_HandleTypeDef huart2; // UART2 handle
+
 
 uint8_t tx_buffer[10] = {10, 20, 40, 50, 60, 70, 90, 90, 100, 110}; // Data to send
 uint8_t rx_buffer[10]; // Buffer to store received data
