@@ -1,3 +1,11 @@
+/* 
+   This program demonstrates UART communication using DMA on STM32. 
+   It sends a message at startup, then echoes back every 5 bytes received over USART2.
+*/
+
+
+
+
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
