@@ -1,6 +1,5 @@
 /*
  * This program uses SPI1 on STM32 to transmit and receive 10 bytes of data.
- * It initializes GPIO, UART2, SPI1, and system clock before performing the SPI exchange.
  */
 
 #include "main.h"
