@@ -30,6 +30,80 @@ typedef struct{
 }SPI_Handle_t;
 
 
+/*
+ *  SPI Device modes
+ */
+
+#define SPI_DEVICE_MODE_MASTER				1
+#define SPI_DEVICE_MODE_SLAVE				0
+
+
+/*
+ *  SPI Bus Configurations
+ */
+
+#define SPI_BUS_CONFIG_FD					1
+#define SPI_BUS_CONFIG_HD					2
+#define SPI_BUS_CONFIG_SIMPLEX_RXONLY		3
+
+/*
+ *  SPI SCLK Speed
+ */
+
+#define SPI_SCLK_SPEED_DIV2					0
+#define SPI_SCLK_SPEED_DIV4					1
+#define SPI_SCLK_SPEED_DIV8					2
+#define SPI_SCLK_SPEED_DIV16				3
+#define SPI_SCLK_SPEED_DIV32				4
+#define SPI_SCLK_SPEED_DIV64				5
+#define SPI_SCLK_SPEED_DIV128				6
+#define SPI_SCLK_SPEED_DIV256				7
+
+
+/*
+ *  SPI DFF
+ */
+
+#define SPI_DFF_8BITS						0
+#define SPI_DFF_16BITS						1
+
+
+/*
+ *  CPOL
+ */
+
+#define SPI_CPOL_HIGH						1
+#define SPI_CPOL_LOW						0
+
+/*
+ *  CPHA
+ */
+
+#define SPI_CPHA_HIGH						1
+#define SPI_CPHA_LOW						0
+
+
+/*
+ *  SPI SSM
+ */
+
+#define SPI_SSM_DI							0
+#define SPI_SSM_EN							1
+
+
+/*SPI SSM*/
+#define SPI_SSM_DI							0
+#define SPI_SSM_EN							1
+
+#define SPI_READY 							0
+#define SPI_BUSY_IN_RX 						1
+#define SPI_BUSY_IN_TX 						2
+
+#define SPI_EVENT_TX_CMPLT					1
+#define SPI_EVENT_RX_CMPLT					2
+#define SPI_EVENT_OVR_ERR					3
+#define SPI_EVENT_CRC_ERR					4
+
 
 
 /*********************** API Supported by this driver **********************/
@@ -70,7 +144,7 @@ void SPI_IRQHandling(SPI_Handle_t *pHandle);
 
 
 
-
+void  SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 
 
 
