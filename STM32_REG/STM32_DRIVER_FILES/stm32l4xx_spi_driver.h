@@ -98,6 +98,7 @@ typedef struct{
 #define SPI_READY 							0
 #define SPI_BUSY_IN_RX 						1
 #define SPI_BUSY_IN_TX 						2
+#define SPI_BUSY_FLAG						(1U<<7)
 
 #define SPI_EVENT_TX_CMPLT					1
 #define SPI_EVENT_RX_CMPLT					2
@@ -143,9 +144,13 @@ void SPI_PRIORITY_CONFIG(uint8_t IRQNumber,uint8_t IRQPriority);
 void SPI_IRQHandling(SPI_Handle_t *pHandle);
 
 
-
 void  SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+
+void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t*pSPIx, uint32_t FlagName);
 
 
 #endif /* INC_STM32L4XX_SPI_DRIVER_H_ */
