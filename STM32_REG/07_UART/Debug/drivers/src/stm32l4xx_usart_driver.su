@@ -1,0 +1,6 @@
+../drivers/src/stm32l4xx_usart_driver.c:8:6:USART_PeriClockControl	16	static
+../drivers/src/stm32l4xx_usart_driver.c:59:6:USART_PeripheralControl	16	static
+../drivers/src/stm32l4xx_usart_driver.c:72:9:USART_GetFlagStatus	16	static
+../drivers/src/stm32l4xx_usart_driver.c:87:6:USART_Init	24	static
+../drivers/src/stm32l4xx_usart_driver.c:160:6:USART_SendData	32	static
+../drivers/src/stm32l4xx_usart_driver.c:207:6:USART_ReceiveData	32	static
