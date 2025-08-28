@@ -1,0 +1,16 @@
+../Core/Src/main.c:91:6:W25Q_SectorErase	1
+../Core/Src/main.c:105:6:W25Q_WriteEnable	1
+../Core/Src/main.c:113:9:W25Q_ReadStatus	1
+../Core/Src/main.c:124:6:W25Q_WaitBusy	2
+../Core/Src/main.c:129:6:W25Q_PageProgram	1
+../Core/Src/main.c:145:6:W25Q_ReadData	1
+../Core/Src/main.c:159:10:W25Q32_ReadID	1
+../Core/Src/main.c:171:6:Delay_us	2
+../Core/Src/main.c:178:10:HCSR04_Read_cm	4
+../Core/Src/main.c:210:5:main	3
+../Core/Src/main.c:301:6:SystemClock_Config	4
+../Core/Src/main.c:351:13:MX_SPI2_Init	2
+../Core/Src/main.c:391:13:MX_USART2_UART_Init	2
+../Core/Src/main.c:422:13:MX_TIM2_Init	2
+../Core/Src/main.c:444:13:MX_GPIO_Init	1
+../Core/Src/main.c:489:6:Error_Handler	1
