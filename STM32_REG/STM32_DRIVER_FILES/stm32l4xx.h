@@ -260,7 +260,27 @@ typedef struct{
 }I2C_RegDef_t;
 
 
+/*
+ *  UART Structure Definition
+ */
 
+typedef struct{
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t CR3;
+	__vo uint32_t BRR;
+	__vo uint32_t GTPR;
+//	uint16_t res0;
+	__vo uint32_t RTQR;
+	__vo uint32_t RQR;
+	//uint16_t res1;
+	__vo uint32_t ISR;
+	__vo uint32_t ICR;
+	__vo uint32_t RDR;
+	//uint16_t res2;
+	__vo uint32_t TDR;
+//	uint16_t res3;
+}USART_RegDef_t;
 
 /*
  * GPIO Peripheral Defintion
@@ -299,6 +319,12 @@ typedef struct{
 #define I2C1                         ((I2C_RegDef_t *)I2C1_BASE_ADDR)
 #define I2C2                         ((I2C_RegDef_t *)I2C2_BASE_ADDR)
 #define I2C3                         ((I2C_RegDef_t *)I2C3_BASE_ADDR)
+
+#define USART1						((USART_RegDef_t *)USART1_BASE_ADDR)
+#define USART2                      ((USART_RegDef_t *)USART2_BASE_ADDR)
+#define USART3						((USART_RegDef_t *)USART3_BASE_ADDR)
+#define UART4						((USART_RegDef_t *)UART4_BASE_ADDR)
+#define UART5						((USART_RegDef_t *)UART5_BASE_ADDR)
 
 
 /*
@@ -411,6 +437,66 @@ typedef struct{
 
 #define SYSCFG_PCLK_DI()           		(RCC -> APB2ENR &=~(1<<0))
 
+
+
+
+
+/*
+ * UART Macros
+ */
+
+
+#define USART_CR1_UE 					0
+#define USART_CR1_UESM 					1
+#define USART_CR1_RE  					2
+#define USART_CR1_TE 					3
+#define USART_CR1_IDLEIE 				4
+#define USART_CR1_RXNEIE  				5
+#define USART_CR1_TCIE					6
+#define USART_CR1_TXEIE					7
+#define USART_CR1_PEIE 					8
+#define USART_CR1_PS 					9
+#define USART_CR1_PCE 					10
+#define USART_CR1_WAKE  				11
+#define USART_CR1_M 					12
+#define USART_CR1_OVER8  				15
+
+#define USART_CR2_ADD   				4
+#define USART_CR2_LBDL   				5
+#define USART_CR2_LBDIE  				6
+#define USART_CR2_LBCL   				8
+#define USART_CR2_CPHA   				9
+#define USART_CR2_CPOL   				10
+#define USART_CR2_STOP   				12
+#define USART_CR2_LINEN   				14
+
+#define USART_CR3_EIE					0
+#define USART_CR3_IREN					1
+#define USART_CR3_IRLP					2
+#define USART_CR3_HDSEL					3
+#define USART_CR3_NACK					4
+#define USART_CR3_SCEN					5
+#define USART_CR3_DMAR					6
+#define USART_CR3_DMAT					7
+#define USART_CR3_RTSE					8
+#define USART_CR3_CTSE					9
+#define USART_CR3_CTSIE					10
+#define USART_CR3_ONEBIT				11
+
+#define USART_ISR_PE					0
+#define USART_ISR_FE					1
+#define USART_ISR_NF					2
+#define USART_ISR_ORE					3
+#define USART_ISR_IDLE					4
+#define USART_ISR_RXNE					5
+#define USART_ISR_TC					6
+#define USART_ISR_TXE					7
+#define USART_ISR_LBDF					8
+#define USART_ISR_CTSIF					9
+#define USART_ISR_CTS					10
+
+
+
 /*
  *  Macros for Enable or Disable
  */
@@ -487,5 +573,8 @@ typedef struct{
 #include "stm32l4xx_gpio_driver.h"
 #include "stm32l4xx_spi_driver.h"
 #include "stm32l4xx_i2c_driver.h"
+#include"stm32l4xx_usart_driver.h"
+
+
 
 #endif /* INC_STM32L4XX_H_ */
