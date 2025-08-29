@@ -1,0 +1,11 @@
+../drivers/src/LCD.c:10:6:lcd_send_command	16	static
+../drivers/src/LCD.c:19:6:lcd_print_char	16	static
+../drivers/src/LCD.c:28:6:lcd_print_string	16	static
+../drivers/src/LCD.c:37:6:lcd_init	24	static
+../drivers/src/LCD.c:81:13:write_4_bits	16	static
+../drivers/src/LCD.c:91:6:lcd_display_clear	8	static
+../drivers/src/LCD.c:97:6:lcd_display_return_home	8	static
+../drivers/src/LCD.c:103:6:lcd_set_cursor	16	static
+../drivers/src/LCD.c:119:13:lcd_enable	8	static
+../drivers/src/LCD.c:127:13:mdelay	24	static
+../drivers/src/LCD.c:132:13:udelay	24	static

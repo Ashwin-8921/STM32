@@ -1,0 +1,11 @@
+../drivers/src/RTC.c:15:9:ds1307_init	16	static
+../drivers/src/RTC.c:26:6:ds1307_set_current_time	24	static
+../drivers/src/RTC.c:50:6:ds1307_get_current_time	24	static
+../drivers/src/RTC.c:75:6:ds1307_set_current_date	16	static
+../drivers/src/RTC.c:84:6:ds1307_get_current_date	16	static
+../drivers/src/RTC.c:92:13:ds1307_i2c_pin_config	32	static
+../drivers/src/RTC.c:121:13:ds1307_i2c_config	8	static
+../drivers/src/RTC.c:129:13:ds1307_write	32	static
+../drivers/src/RTC.c:138:16:ds1307_read	32	static
+../drivers/src/RTC.c:147:16:binary_to_bcd	24	static
+../drivers/src/RTC.c:163:16:bcd_to_binary	24	static
