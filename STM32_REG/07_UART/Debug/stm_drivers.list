@@ -39,15 +39,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  00002b44  00000000  00000000  00004fca  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00001ece  00000000  00000000  00007b0e  2**0
+ 18 .debug_line   00001ebe  00000000  00000000  00007b0e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0000aad6  00000000  00000000  000099dc  2**0
+ 19 .debug_str    0000aad1  00000000  00000000  000099cc  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  000144b2  2**0
+ 20 .comment      00000043  00000000  00000000  0001449d  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00000920  00000000  00000000  000144f8  2**2
+ 21 .debug_frame  00000920  00000000  00000000  000144e0  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 00000061  00000000  00000000  00014e18  2**0
+ 22 .debug_line_str 0000005c  00000000  00000000  00014e00  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1803,10 +1803,10 @@ void USART_Init(USART_Handle_t *pUSARTHandle)
  8000c8e:	609a      	str	r2, [r3, #8]
 
     // 7. Configure baud rate
-    pUSARTHandle->pUSARTx->BRR = 0x25;
+    pUSARTHandle->pUSARTx->BRR = 0x23;
  8000c90:	687b      	ldr	r3, [r7, #4]
  8000c92:	681b      	ldr	r3, [r3, #0]
- 8000c94:	2225      	movs	r2, #37	@ 0x25
+ 8000c94:	2223      	movs	r2, #35	@ 0x23
  8000c96:	60da      	str	r2, [r3, #12]
    // USART_SetBaudRate(pUSARTHandle->pUSARTx, pUSARTHandle->USART_Config.USART_Baud);
 }
