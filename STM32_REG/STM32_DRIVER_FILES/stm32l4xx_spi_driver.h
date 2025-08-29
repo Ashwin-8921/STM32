@@ -144,13 +144,29 @@ void SPI_PRIORITY_CONFIG(uint8_t IRQNumber,uint8_t IRQPriority);
 void SPI_IRQHandling(SPI_Handle_t *pHandle);
 
 
-void  SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+// Enable or disable SSI (Internal slave select)
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 
+// Enable or disable SPI peripheral
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 
-void  SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+// Enable or disable SSOE (Slave select output enable)
+void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 
-uint8_t SPI_GetFlagStatus(SPI_RegDef_t*pSPIx, uint32_t FlagName);
+// Check status of given flag (ex: TXE, RXNE, BSY)
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName);
+
+// Clear OVR (overrun) flag
+void SPI_ClearOVRFlag(SPI_RegDef_t *pSPIx);
+
+// Close reception (disable RX interrupts, reset state)
+void SPI_CloseReception(SPI_Handle_t *pSPIHandle);
+
+// Close transmission (disable TX interrupts, reset state)
+void SPI_CloseTransmisson(SPI_Handle_t *pSPIHandle);
+
+// Application callback to handle events (TX complete, RX complete, errors, etc.)
+void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t AppEv);
 
 
 #endif /* INC_STM32L4XX_SPI_DRIVER_H_ */

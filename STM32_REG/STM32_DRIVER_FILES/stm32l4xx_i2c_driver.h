@@ -5,6 +5,8 @@
 
 
 #include"stm32l4xx.h"
+#include"stdlib.h"
+#include"string.h"
 
 
 // Configuration structure for I2C peripheral
@@ -56,7 +58,16 @@ typedef struct{
 #define I2C_BUSY_IN_TX 		 2
 
 
-
+#define I2C_EV_TX_CMPLT  	 	0
+#define I2C_EV_RX_CMPLT  	 	1
+#define I2C_EV_STOP       		2
+#define I2C_ERROR_BERR 	 		3
+#define I2C_ERROR_ARLO  		4
+#define I2C_ERROR_AF    		5
+#define I2C_ERROR_OVR   		6
+#define I2C_ERROR_TIMEOUT 		7
+#define I2C_EV_DATA_REQ         8
+#define I2C_EV_DATA_RCV         9
 
 /*********************** API Supported by this driver **********************/
 
@@ -111,6 +122,29 @@ void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle);
 void I2C_CloseSendData(I2C_Handle_t *pI2CHandle);
 
 
+// Configure (enable/disable) an I2C interrupt in NVIC
+void I2C_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
+
+// Set priority of an I2C interrupt
+void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
+
+// Handle I2C event interrupt (e.g., data transmit/receive, start/stop detection)
+void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle);
+
+// Handle I2C error interrupt (e.g., bus error, arbitration lost, ACK failure)
+void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle);
+
+// Enable or disable the I2C peripheral
+void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
+
+// Enable or disable ACKing after each received byte
+void I2C_ManageAcking(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
+
+// Generate STOP condition on I2C bus (end communication)
+void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
+
+// Application callback for I2C events (e.g., Tx complete, Rx complete, errors)
+void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv);
 
 
 

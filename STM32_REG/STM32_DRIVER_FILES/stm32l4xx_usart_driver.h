@@ -164,5 +164,5 @@ void USART_ClearFlag(USART_RegDef_t *pUSARTx, uint8_t StatusFlagName);
 void USART_ApplicationEventCallback(USART_Handle_t *pUSARTHandle, uint8_t AppEv);
 
 
-
+void USART_SetBaudRate(USART_RegDef_t *pUSARTx, uint32_t BaudRate);
 #endif /* INC_STM32L4XX_UART_DRIVER_H_ */
