@@ -25,6 +25,7 @@ void loop() {
     // Check how many bytes were actually received
     int bytesReceived = slave.available();
     
+    
 
     if (bytesReceived > 0) {
         // Read and print each received byte
