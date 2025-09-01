@@ -132,7 +132,7 @@ int main(void)
  8000200:	2001      	movs	r0, #1
  8000202:	f000 f913 	bl	800042c <init_systick_timer>
 
-	// ✅ Set today's date (Monday, 01/09/25)
+	// Set today's date (Monday, 01/09/25)
 	current_date.day   = MONDAY;   // Day of the week
  8000206:	2302      	movs	r3, #2
  8000208:	71fb      	strb	r3, [r7, #7]
@@ -146,7 +146,7 @@ int main(void)
  8000212:	2319      	movs	r3, #25
  8000214:	71bb      	strb	r3, [r7, #6]
 
-	// ✅ Set current time (10:30:00 AM)
+	//Set current time (10:30:00 AM)
 	current_time.hours       = 10;
  8000216:	230a      	movs	r3, #10
  8000218:	72bb      	strb	r3, [r7, #10]

@@ -43,13 +43,13 @@ int main(void)
 	// Start SysTick timer at 1Hz (1 interrupt per second)
 	init_systick_timer(1);
 
-	// ✅ Set today's date (Monday, 01/09/25)
+	// Set today's date (Monday, 01/09/25)
 	current_date.day   = MONDAY;   // Day of the week
 	current_date.date  = 1;        // Day number
 	current_date.month = 9;        // September
 	current_date.year  = 25;       // Year = 2025 (last two digits)
 
-	// ✅ Set current time (10:30:00 AM)
+	//Set current time (10:30:00 AM)
 	current_time.hours       = 10;
 	current_time.minutes     = 30;
 	current_time.seconds     = 0;
