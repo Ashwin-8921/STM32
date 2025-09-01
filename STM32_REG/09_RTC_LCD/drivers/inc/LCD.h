@@ -24,7 +24,7 @@ void lcd_set_cursor(uint8_t row, uint8_t column);
 #define LCD_GPIO_D7    GPIO_PIN_NO_6
 
 // --- LCD Command Macros ---
-#define LCD_CMD_4DL_2N_5X8F        0x28
+#define LCD_CMD_4DL_2N_5X8F         0x28
 #define LCD_CMD_DON_CURON           0x0E
 #define LCD_CMD_INCADD              0x06
 #define LCD_CMD_DIS_CLEAR           0x01
