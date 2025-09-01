@@ -3,7 +3,7 @@
 // Internal helper functions
 static void write_4_bits(uint8_t value);
 static void lcd_enable(void);
-static void mdelay(uint32_t cnt);
+
 static void udelay(uint32_t cnt);
 
 // Send a command to the LCD (like clear, move cursor, etc.)
@@ -135,7 +135,7 @@ static void lcd_enable(void)
 }
 
 // Millisecond delay (rough software loop)
-static void mdelay(uint32_t cnt)
+void mdelay(uint32_t cnt)
 {
 	for(uint32_t i = 0; i < (cnt * 1000); i++);
 }

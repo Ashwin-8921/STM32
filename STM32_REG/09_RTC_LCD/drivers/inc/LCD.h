@@ -12,6 +12,7 @@ void lcd_display_clear(void);
 void lcd_display_return_home(void);
 void lcd_print_string(char*);
 void lcd_set_cursor(uint8_t row, uint8_t column);
+void mdelay(uint32_t cnt);
 
 // --- LCD GPIO Pin Configuration ---
 #define LCD_GPIO_PORT  GPIOD
