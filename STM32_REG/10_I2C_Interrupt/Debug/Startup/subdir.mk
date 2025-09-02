@@ -16,7 +16,7 @@ S_DEPS += \
 
 # Each subdirectory must supply rules for building sources it contributes
 Startup/%.o: ../Startup/%.s Startup/subdir.mk
-	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt/drivers/inc" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt/drivers/src" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt/drivers" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt_2/drivers/inc" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt_2/drivers/src" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt_2/drivers" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@" "$<"
 
 clean: clean-Startup
 

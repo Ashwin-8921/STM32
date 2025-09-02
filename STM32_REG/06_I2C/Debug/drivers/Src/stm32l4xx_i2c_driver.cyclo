@@ -4,5 +4,5 @@
 ../drivers/Src/stm32l4xx_i2c_driver.c:41:6:I2C_PeriClockControl	8
 ../drivers/Src/stm32l4xx_i2c_driver.c:79:6:I2C_Init	1
 ../drivers/Src/stm32l4xx_i2c_driver.c:97:6:I2C_MasterSendData	8
-../drivers/Src/stm32l4xx_i2c_driver.c:155:6:I2C_MasterReceiveData	8
-../drivers/Src/stm32l4xx_i2c_driver.c:215:6:I2C_IRQInterruptConfig	12
+../drivers/Src/stm32l4xx_i2c_driver.c:151:6:I2C_MasterReceiveData	8
+../drivers/Src/stm32l4xx_i2c_driver.c:207:6:I2C_IRQInterruptConfig	12

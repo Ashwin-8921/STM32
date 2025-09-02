@@ -94,11 +94,7 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
 
 
 // Master sends data in blocking mode
-void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,
-                        uint8_t *pTxBuffer,
-                        uint32_t Len,
-                        uint8_t SlaveAddr,
-                        uint8_t Sr)
+void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxBuffer,uint32_t Len,uint8_t SlaveAddr,uint8_t Sr)
 {
     // 1. Wait until I2C is not busy (BUSY flag in ISR, bit 15)
     while (((pI2CHandle->pI2Cx->ISR >> 15) & 1));
@@ -152,11 +148,7 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,
 
 
 // Master receives data in blocking mode
-void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,
-                           uint8_t *pRxBuffer,
-                           uint8_t Len,
-                           uint8_t SlaveAddr,
-                           uint8_t Sr)
+void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer,uint8_t Len,uint8_t SlaveAddr,uint8_t Sr)
 {
     // 1. Wait until the bus is free (BUSY flag = 0, bit 15 in ISR)
     while (((pI2CHandle->pI2Cx->ISR >> 15) & 1) == 0);

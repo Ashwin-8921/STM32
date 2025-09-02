@@ -37,17 +37,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_rnglists 000000f4  00000000  00000000  000034a8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  000023f7  00000000  00000000  0000359c  2**0
+ 17 .debug_macro  000023df  00000000  00000000  0000359c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   000018d5  00000000  00000000  00005993  2**0
+ 18 .debug_line   000018d8  00000000  00000000  0000597b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00009d39  00000000  00000000  00007268  2**0
+ 19 .debug_str    00009d79  00000000  00000000  00007253  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  00010fa1  2**0
+ 20 .comment      00000043  00000000  00000000  00010fcc  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  000004d0  00000000  00000000  00010fe4  2**2
+ 21 .debug_frame  000004d0  00000000  00000000  00011010  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 00000062  00000000  00000000  000114b4  2**0
+ 22 .debug_line_str 00000062  00000000  00000000  000114e0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -81,40 +81,40 @@ Disassembly of section .text:
  80001c8:	08000acc 	.word	0x08000acc
 
 080001cc <SPI2_GPIOInits>:
-void delay(void);
-void SPI2_GPIOInits(void);
+void SPI2_GPIOInits(void);            // Function prototype for SPI2 GPIO setup
 
 
+// Function to configure GPIO pins for SPI2
 void SPI2_GPIOInits(void)
 {
  80001cc:	b580      	push	{r7, lr}
  80001ce:	b084      	sub	sp, #16
  80001d0:	af00      	add	r7, sp, #0
-    GPIO_Handle_t SPIPins;
-    SPIPins.pGPIOx = GPIOB;
+    GPIO_Handle_t SPIPins;                              // Handle for GPIO config
+    SPIPins.pGPIOx = GPIOB;                             // Use GPIOB port
  80001d2:	4b16      	ldr	r3, [pc, #88]	@ (800022c <SPI2_GPIOInits+0x60>)
  80001d4:	607b      	str	r3, [r7, #4]
-    SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
+    SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;     // Alternate function mode
  80001d6:	2302      	movs	r3, #2
  80001d8:	727b      	strb	r3, [r7, #9]
-    SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = 5;   // AF5 = SPI2
+    SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = 5;             // AF5 = SPI2
  80001da:	2305      	movs	r3, #5
  80001dc:	737b      	strb	r3, [r7, #13]
-    SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+    SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;   // Push-pull output
  80001de:	2300      	movs	r3, #0
  80001e0:	733b      	strb	r3, [r7, #12]
-    SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+    SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD; // No pull-up/pull-down
  80001e2:	2300      	movs	r3, #0
  80001e4:	72fb      	strb	r3, [r7, #11]
-    SPIPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_HIGH;
+    SPIPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_HIGH;    // High speed output
  80001e6:	2303      	movs	r3, #3
  80001e8:	72bb      	strb	r3, [r7, #10]
-    GPIO_PeriClockControl(GPIOB, ENABLE);
+    GPIO_PeriClockControl(GPIOB, ENABLE);                      // Enable GPIOB clock
  80001ea:	2101      	movs	r1, #1
  80001ec:	480f      	ldr	r0, [pc, #60]	@ (800022c <SPI2_GPIOInits+0x60>)
  80001ee:	f000 f8a1 	bl	8000334 <GPIO_PeriClockControl>
 
-    // NSS (PB12)
+    // Configure NSS pin (PB12)
     SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
  80001f2:	230c      	movs	r3, #12
  80001f4:	723b      	strb	r3, [r7, #8]
@@ -123,7 +123,7 @@ void SPI2_GPIOInits(void)
  80001f8:	4618      	mov	r0, r3
  80001fa:	f000 f969 	bl	80004d0 <GPIO_Init>
 
-    // SCK (PB13)
+    // Configure SCK pin (PB13)
     SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
  80001fe:	230d      	movs	r3, #13
  8000200:	723b      	strb	r3, [r7, #8]
@@ -132,7 +132,7 @@ void SPI2_GPIOInits(void)
  8000204:	4618      	mov	r0, r3
  8000206:	f000 f963 	bl	80004d0 <GPIO_Init>
 
-    // MISO (PB14)
+    // Configure MISO pin (PB14)
     SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
  800020a:	230e      	movs	r3, #14
  800020c:	723b      	strb	r3, [r7, #8]
@@ -141,7 +141,7 @@ void SPI2_GPIOInits(void)
  8000210:	4618      	mov	r0, r3
  8000212:	f000 f95d 	bl	80004d0 <GPIO_Init>
 
-    // MOSI (PB15)
+    // Configure MOSI pin (PB15)
     SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
  8000216:	230f      	movs	r3, #15
  8000218:	723b      	strb	r3, [r7, #8]
@@ -159,38 +159,40 @@ void SPI2_GPIOInits(void)
 
 08000230 <SPI2_Inits>:
 
+
+// Function to configure SPI2 peripheral
 void SPI2_Inits(void)
 {
  8000230:	b580      	push	{r7, lr}
  8000232:	b088      	sub	sp, #32
  8000234:	af00      	add	r7, sp, #0
-    SPI_Handle_t SPI2Handle;
-    SPI2Handle.pSPIx = SPI2;
+    SPI_Handle_t SPI2Handle;                         // Handle for SPI config
+    SPI2Handle.pSPIx = SPI2;                         // Use SPI2 peripheral
  8000236:	4b0c      	ldr	r3, [pc, #48]	@ (8000268 <SPI2_Inits+0x38>)
  8000238:	603b      	str	r3, [r7, #0]
-    SPI2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
+    SPI2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER; // Set as master
  800023a:	2301      	movs	r3, #1
  800023c:	713b      	strb	r3, [r7, #4]
-    SPI2Handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
+    SPI2Handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;       // Full-duplex
  800023e:	2301      	movs	r3, #1
  8000240:	717b      	strb	r3, [r7, #5]
-    SPI2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;
+    SPI2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;    // Clock speed = PCLK/32
  8000242:	2304      	movs	r3, #4
  8000244:	71bb      	strb	r3, [r7, #6]
-    SPI2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
+    SPI2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;                 // 8-bit data frame
  8000246:	2300      	movs	r3, #0
  8000248:	71fb      	strb	r3, [r7, #7]
-    SPI2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
+    SPI2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;                 // Clock polarity = 0
  800024a:	2300      	movs	r3, #0
  800024c:	723b      	strb	r3, [r7, #8]
-    SPI2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
+    SPI2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;                 // Clock phase = 0
  800024e:	2300      	movs	r3, #0
  8000250:	727b      	strb	r3, [r7, #9]
-    SPI2Handle.SPIConfig.SPI_SSM = SPI_SSM_DI;  // Hardware slave management
+    SPI2Handle.SPIConfig.SPI_SSM = SPI_SSM_DI;                    // Hardware NSS management
  8000252:	2300      	movs	r3, #0
  8000254:	72bb      	strb	r3, [r7, #10]
 
-    SPI_Init(&SPI2Handle);
+    SPI_Init(&SPI2Handle);  // Initialize SPI2 with this configuration
  8000256:	463b      	mov	r3, r7
  8000258:	4618      	mov	r0, r3
  800025a:	f000 fb49 	bl	80008f0 <SPI_Init>
@@ -205,41 +207,37 @@ void SPI2_Inits(void)
 0800026c <main>:
 
 
-
 int main(void)
 {
  800026c:	b580      	push	{r7, lr}
  800026e:	b082      	sub	sp, #8
  8000270:	af00      	add	r7, sp, #0
-    uint8_t data=10;
+    uint8_t data=10;   // Data byte to send (value = 10)
  8000272:	230a      	movs	r3, #10
  8000274:	71fb      	strb	r3, [r7, #7]
 
-
-    SPI2_GPIOInits();
+    SPI2_GPIOInits();                    // Setup SPI2 GPIO pins
  8000276:	f7ff ffa9 	bl	80001cc <SPI2_GPIOInits>
-    SPI2_Inits();
+    SPI2_Inits();                        // Setup SPI2 peripheral
  800027a:	f7ff ffd9 	bl	8000230 <SPI2_Inits>
-    SPI_SSOEConfig(SPI2, ENABLE);
+    SPI_SSOEConfig(SPI2, ENABLE);        // Enable automatic NSS output
  800027e:	2101      	movs	r1, #1
  8000280:	480b      	ldr	r0, [pc, #44]	@ (80002b0 <main+0x44>)
  8000282:	f000 fbe4 	bl	8000a4e <SPI_SSOEConfig>
-    SPI_PeripheralControl(SPI2, ENABLE);
+    SPI_PeripheralControl(SPI2, ENABLE); // Enable SPI2 module
  8000286:	2101      	movs	r1, #1
  8000288:	4809      	ldr	r0, [pc, #36]	@ (80002b0 <main+0x44>)
  800028a:	f000 fbc5 	bl	8000a18 <SPI_PeripheralControl>
 
-    while(1)
+    while(1)                             // Infinite loop
     {
-
-
-            SPI_SendData(SPI2, &data, 1);
+        SPI_SendData(SPI2, &data, 1);    // Send 1 byte (value = 10)
  800028e:	1dfb      	adds	r3, r7, #7
  8000290:	2201      	movs	r2, #1
  8000292:	4619      	mov	r1, r3
  8000294:	4806      	ldr	r0, [pc, #24]	@ (80002b0 <main+0x44>)
  8000296:	f000 fb9c 	bl	80009d2 <SPI_SendData>
-            while(SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
+        while(SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG)); // Wait until SPI not busy
  800029a:	bf00      	nop
  800029c:	2180      	movs	r1, #128	@ 0x80
  800029e:	4804      	ldr	r0, [pc, #16]	@ (80002b0 <main+0x44>)
@@ -247,17 +245,17 @@ int main(void)
  80002a4:	4603      	mov	r3, r0
  80002a6:	2b00      	cmp	r3, #0
  80002a8:	d1f8      	bne.n	800029c <main+0x30>
-            delay();
+        delay();                         // Small delay between transfers
  80002aa:	f000 f803 	bl	80002b4 <delay>
-            SPI_SendData(SPI2, &data, 1);
+        SPI_SendData(SPI2, &data, 1);    // Send 1 byte (value = 10)
  80002ae:	e7ee      	b.n	800028e <main+0x22>
  80002b0:	40003800 	.word	0x40003800
 
 080002b4 <delay>:
-
-    }
 }
 
+
+// Simple delay function
 void delay()
 {
  80002b4:	b480      	push	{r7}

@@ -539,6 +539,38 @@ typedef struct{
 
 
 #define I2C_CR1_ACK     10
+/* I2C_CR1 bits */
+#define I2C_CR1_PE       0   /* Peripheral enable */
+#define I2C_CR1_TXIE     1   /* TX interrupt enable */
+#define I2C_CR1_RXIE     2   /* RX interrupt enable */
+#define I2C_CR1_ADDRIE   3   /* Address match interrupt enable */
+#define I2C_CR1_NACKIE   4   /* NACK received interrupt enable */
+#define I2C_CR1_STOPIE   5   /* STOP detection interrupt enable */
+#define I2C_CR1_TCIE     6   /* Transfer complete interrupt enable */
+#define I2C_CR1_ERRIE    7   /* Error interrupt enable */
+#define I2C_CR1_ACK      10  /* ACK enable */
+
+/* I2C_ISR bits */
+#define I2C_ISR_TXE      0   /* TXDR empty */
+#define I2C_ISR_TXIS     1   /* TX interrupt status (TXDR empty and ready) */
+#define I2C_ISR_RXNE     2   /* RXDR not empty */
+#define I2C_ISR_ADDR     3   /* Address matched */
+#define I2C_ISR_NACKF    4   /* NACK received */
+#define I2C_ISR_STOPF    5   /* STOP detection */
+#define I2C_ISR_TC       6   /* Transfer complete */
+#define I2C_ISR_TCR      7   /* Transfer complete reload */
+#define I2C_ISR_BERR     8   /* Bus error */
+#define I2C_ISR_ARLO     9   /* Arbitration lost */
+#define I2C_ISR_OVR      10  /* Overrun/underrun */
+
+/* I2C_ICR bits (write 1 to clear) */
+#define I2C_ICR_ADDRCF   3   /* Clear ADDR flag */
+#define I2C_ICR_NACKCF   4   /* Clear NACK flag */
+#define I2C_ICR_STOPCF   5   /* Clear STOP flag */
+#define I2C_ICR_BERRCF   8   /* Clear Bus error */
+#define I2C_ICR_ARLOCF   9   /* Clear Arbitration lost */
+#define I2C_ICR_OVRCF    10  /* Clear Overrun/underrun */
+
 
 /*
  *  Macros to Reset GPIOx Peripherals

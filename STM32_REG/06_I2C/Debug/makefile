@@ -60,8 +60,8 @@ all: main-build
 main-build: 07_I2C.elf secondary-outputs
 
 # Tool invocations
-07_I2C.elf 07_I2C.map: $(OBJS) $(USER_OBJS) C:\Users\USER\STM32CubeIDE\workspace_1.19.0\07_I2C\STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "07_I2C.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\USER\STM32CubeIDE\workspace_1.19.0\07_I2C\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="07_I2C.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+07_I2C.elf 07_I2C.map: $(OBJS) $(USER_OBJS) E:\Micro\ controller\GIThub\STM32\STM32_REG\06_I2C\STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "07_I2C.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\Micro controller\GIThub\STM32\STM32_REG\06_I2C\STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="07_I2C.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

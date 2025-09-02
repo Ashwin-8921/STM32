@@ -331,36 +331,47 @@ void I2C_IRQPriorityConfig(uint8_t IRQNumber,uint32_t IRQPriority)
 
 
 
-// Non-blocking master send
-uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pTxBuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr)
+/* ---------- I2C_MasterSendDataIT (fixed non-blocking master TX) ---------- */
+uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle,
+                             uint8_t *pTxBuffer,
+                             uint32_t Len,
+                             uint8_t SlaveAddr,
+                             uint8_t Sr)
 {
-	uint8_t busystate = pI2CHandle->TxRxState;
+    uint8_t busystate = pI2CHandle->TxRxState;
 
-	if((busystate != I2C_BUSY_IN_TX) && (busystate != I2C_BUSY_IN_RX))
-	{
-		// Save context
-		pI2CHandle->pTxBuffer = pTxBuffer;
-		pI2CHandle->TxLen     = Len;
-		pI2CHandle->TxRxState = I2C_BUSY_IN_TX;
-		pI2CHandle->DevAddr   = SlaveAddr;
-		pI2CHandle->Sr        = Sr;
+    if((busystate != I2C_BUSY_IN_TX) && (busystate != I2C_BUSY_IN_RX))
+    {
+        /* save context */
+        pI2CHandle->pTxBuffer = pTxBuffer;
+        pI2CHandle->TxLen     = Len;
+        pI2CHandle->TxRxState = I2C_BUSY_IN_TX;
+        pI2CHandle->DevAddr   = SlaveAddr;
+        pI2CHandle->Sr        = Sr;
 
-		while(((pI2CHandle->pI2Cx->ISR >> 15) & 1) == 0); // Wait until bus free
+        /* wait until bus is free: BUSY bit in ISR is bit 15 -> ensure it is 0 */
+        while( (pI2CHandle->pI2Cx->ISR & (1U << 15)) != 0 );
 
-		// Prepare CR2 for transmission
-		uint32_t cr2 = 0;
-		cr2 |= (SlaveAddr << 1);  // Slave address
-		cr2 |= (Len << 16);       // Number of bytes
-		if(Sr == I2C_DISABLE_SR) cr2 |= (1 << 25); // Auto-stop if needed
+        /* Prepare CR2: clear SADD[9:0] and NBYTES[7:0] and relevant control bits first */
+        uint32_t tmp = pI2CHandle->pI2Cx->CR2;
+        tmp &= ~((0x3FFU << 0) | (0xFFU << 16) | (1U<<24) | (1U<<25) | (1U<<10)); /* clear SADD, NBYTES, RELOAD, AUTOEND, RD_WRN */
+        tmp |= ((uint32_t)(SlaveAddr & 0x3FFU) << 1);
+        tmp |= ((Len & 0xFFU) << 16);
+        if(Sr == I2C_DISABLE_SR)
+        {
+            tmp |= (1U << 25); /* AUTOEND */
+        }
+        pI2CHandle->pI2Cx->CR2 = tmp;
 
-		pI2CHandle->pI2Cx->CR2 |= cr2;
+        /* Generate START (CR2 START bit is bit 13) */
+        pI2CHandle->pI2Cx->CR2 |= (1U << 13);
 
-		// Generate start + enable interrupts
-		I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
-		pI2CHandle->pI2Cx->CR1 |= ((1<<1) | (1<<6) | (1<<7));
-	}
+        /* Enable interrupts: TXIS (TX interrupt), ERRIE (error interrupts), STOPIE if desired */
+        /* Use named macros if your header defines them: I2C_CR1_TXIE, I2C_CR1_ERRIE, I2C_CR1_STOPIE */
+        pI2CHandle->pI2Cx->CR1 |= (1U << I2C_CR1_TXIE) | (1U << I2C_CR1_ERRIE) | (1U << I2C_CR1_STOPIE);
+    }
 
-	return busystate;
+    return busystate;
 }
 
 
@@ -395,15 +406,25 @@ uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer,uint
     return busystate;
 }
 
-// Handle TXE (data register empty)
+/* ---------- I2C_MasterHandleTXEInterrupt (fixed TXE/TXIS handling) ---------- */
 static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t *pI2CHandle )
 {
-	if(pI2CHandle->TxLen > 0)
-	{
-		pI2CHandle->pI2Cx->TXDR = *(pI2CHandle->pTxBuffer); // Load next byte
-		pI2CHandle->TxLen--;
-		pI2CHandle->pTxBuffer++;
-	}
+    /* TXIS (transmit interrupt status) indicates TXDR can be written.
+       Use ISR TXIS bit macro if available (I2C_ISR_TXIS). */
+    if(pI2CHandle->TxLen > 0)
+    {
+        pI2CHandle->pI2Cx->TXDR = *(pI2CHandle->pTxBuffer);
+        pI2CHandle->pTxBuffer++;
+        pI2CHandle->TxLen--;
+
+        /* If this was the last byte and AUTOEND not used, nothing extra here:
+           STOPF will be generated (if AUTOEND set then STOP auto generated).
+           If TxLen==0 and AUTOEND not set, TC/STOP handling in EV IRQ will finalize. */
+    }
+    else
+    {
+        /* No data left — should not normally arrive here if NBYTES was set correctly */
+    }
 }
 
 
@@ -494,65 +515,69 @@ static void I2C_ExecuteAddressPhaseRead(I2C_RegDef_t *pI2Cx, uint8_t SlaveAddr)
 
 
 
-// Handle event interrupts
+/* ---------- I2C_EV_IRQHandling (cleaned event IRQ handler) ---------- */
 void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle)
 {
-    uint32_t isr = pI2CHandle->pI2Cx->ISR;  // Interrupt status
-    uint32_t cr1 = pI2CHandle->pI2Cx->CR1;  // Control register
+    uint32_t isr = pI2CHandle->pI2Cx->ISR;
+   // uint32_t cr1 = pI2CHandle->pI2Cx->CR1;
 
-    // ADDR flag (address matched)
-    if((isr & (1U << 3)) && (cr1 & (1U << 3)))
+    /* ADDR flag: clear by reading ISR and writing ICR if required.
+       Macro I2C_ISR_ADDR (bit pos) and I2C_ICR_ADDRCF (clear bit) recommended. */
+    if(isr & (1U << I2C_ISR_ADDR))
     {
-        if(pI2CHandle->TxRxState == I2C_BUSY_IN_TX)
-            I2C_ExecuteAddressPhaseWrite(pI2CHandle->pI2Cx, pI2CHandle->DevAddr);
-        else if(pI2CHandle->TxRxState == I2C_BUSY_IN_RX)
-            I2C_ExecuteAddressPhaseRead(pI2CHandle->pI2Cx, pI2CHandle->DevAddr);
+        /* For STM32L4, ADDR is cleared by reading ISR then reading or writing ICR.
+           We'll clear by writing the ADDRCF bit in ICR (use macro I2C_ICR_ADDRCF) */
+        pI2CHandle->pI2Cx->ICR |= (1U << I2C_ICR_ADDRCF);
     }
 
-    if(isr & (1U << 3)) pI2CHandle->pI2Cx->ICR |= (1U << 3); // Clear ADDR
-
-    // STOPF flag
-    if((isr & (1U << 6)) && (cr1 & (1U << 6)))
+    /* TXIS: peripheral asks for data (transmit) */
+    if(isr & (1U << I2C_ISR_TXIS))
     {
-        if(pI2CHandle->TxRxState == I2C_BUSY_IN_TX && pI2CHandle->TxLen == 0)
+        if(pI2CHandle->TxRxState == I2C_BUSY_IN_TX)
         {
-            if(pI2CHandle->Sr == I2C_DISABLE_SR) pI2CHandle->pI2Cx->CR2 |= (1U << 14); // Generate STOP
+            I2C_MasterHandleTXEInterrupt(pI2CHandle);
+        }
+    }
 
+    /* RXNE: data received (master RX) */
+    if(isr & (1U << I2C_ISR_RXNE))
+    {
+        if(pI2CHandle->TxRxState == I2C_BUSY_IN_RX)
+        {
+            /* read byte */
+            *pI2CHandle->pRxBuffer = (uint8_t)pI2CHandle->pI2Cx->RXDR;
+            pI2CHandle->pRxBuffer++;
+            pI2CHandle->RxLen--;
+
+            if(pI2CHandle->RxLen == 0)
+            {
+                /* If AUTOEND used STOP will arrive and be handled below */
+            }
+        }
+    }
+
+    /* STOPF: stop detected -> transfer complete (clear STOPF via ICR STOPCF) */
+    if(isr & (1U << I2C_ISR_STOPF))
+    {
+        /* clear STOPF */
+        pI2CHandle->pI2Cx->ICR |= (1U << I2C_ICR_STOPCF);
+
+        /* finalize based on state */
+        if(pI2CHandle->TxRxState == I2C_BUSY_IN_TX)
+        {
             I2C_CloseSendData(pI2CHandle);
             I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_TX_CMPLT);
         }
-    }
-
-    if(isr & (1U << 6)) // Clear STOPF
-    {
-        pI2CHandle->pI2Cx->ICR |= (1U << 6);
-        I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_STOP);
-    }
-
-    // TXE flag
-    if((isr & (1U << 1)) && (cr1 & (1U << 1)))
-    {
-        if(isr & (1U << 16)) // TXIS set
+        else if(pI2CHandle->TxRxState == I2C_BUSY_IN_RX)
         {
-            if(pI2CHandle->TxRxState == I2C_BUSY_IN_TX)
-                I2C_MasterHandleTXEInterrupt(pI2CHandle);
+            I2C_CloseReceiveData(pI2CHandle);
+            I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_RX_CMPLT);
         }
-        else if(isr & (1U << 17)) // Data request from slave
-            I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_DATA_REQ);
     }
 
-    // RXNE flag
-    if((isr & (1U << 2)) && (cr1 & (1U << 2)))
-    {
-        if(isr & (1U << 16)) // RXNE set
-        {
-            if(pI2CHandle->TxRxState == I2C_BUSY_IN_RX)
-                I2C_MasterHandleRXNEInterrupt(pI2CHandle);
-        }
-        else if(!(isr & (1U << 17))) // Data received from slave
-            I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_DATA_RCV);
-    }
+    /* Optional: handle other events as needed (BTF, TC, RELOAD) */
 }
+
 
 
 
@@ -594,18 +619,18 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle)
 }
 
 
+/* ---------- I2C_ManageAcking (ensure ACK is CR1 bit) ---------- */
 void I2C_ManageAcking(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi)
 {
     if (EnOrDi == ENABLE)
     {
-        // Set the ACK bit
-        pI2Cx->CR1 |= (1 << I2C_CR1_ACK);
+        pI2Cx->CR1 |= (1U << I2C_CR1_ACK);
     }
     else
     {
-        // Clear the ACK bit
-        pI2Cx->CR1 &= ~(1 << I2C_CR1_ACK);
+        pI2Cx->CR1 &= ~(1U << I2C_CR1_ACK);
     }
 }
+
 
 

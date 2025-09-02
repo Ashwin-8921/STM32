@@ -18,7 +18,6 @@ void setup() {
 void loop() {
     // Clear RX buffer before new transaction
     memset(spi_slave_rx_buf, 0, BUFFER_SIZE);
-
     // Wait for SPI master to send data
     slave.wait(spi_slave_rx_buf, nullptr, BUFFER_SIZE);
 
@@ -26,7 +25,7 @@ void loop() {
     int bytesReceived = slave.available();
     
     
-
+     Serial.println(bytesReceived);
     if (bytesReceived > 0) {
         // Read and print each received byte
         for (int i = 0; i < bytesReceived; i++) {

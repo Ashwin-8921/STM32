@@ -25,7 +25,7 @@ C_DEPS += \
 
 # Each subdirectory must supply rules for building sources it contributes
 drivers/src/%.o drivers/src/%.su drivers/src/%.cyclo: ../drivers/src/%.c drivers/src/subdir.mk
-	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32L4 -DSTM32 -DNUCLEO_L476RG -DSTM32L476RGTx -c -I../Inc -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt/drivers/inc" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt/drivers/src" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+	arm-none-eabi-gcc "$<" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32L4 -DSTM32 -DNUCLEO_L476RG -DSTM32L476RGTx -c -I../Inc -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt_2/drivers/inc" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt_2/drivers/src" -I"C:/Users/USER/STM32CubeIDE/workspace_1.19.0/i2c_interrupt_2/drivers" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 
 clean: clean-drivers-2f-src
 

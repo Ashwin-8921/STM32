@@ -39,15 +39,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  00001a07  00000000  00000000  000039ba  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000183f  00000000  00000000  000053c1  2**0
+ 18 .debug_line   0000183c  00000000  00000000  000053c1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0000663c  00000000  00000000  00006c00  2**0
+ 19 .debug_str    0000663b  00000000  00000000  00006bfd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  0000d23c  2**0
+ 20 .comment      00000043  00000000  00000000  0000d238  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  000003d4  00000000  00000000  0000d280  2**2
+ 21 .debug_frame  000003d4  00000000  00000000  0000d27c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 0000005a  00000000  00000000  0000d654  2**0
+ 22 .debug_line_str 0000005a  00000000  00000000  0000d650  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1334,11 +1334,10 @@ void I2C_Init(I2C_Handle_t *pI2CHandle)
  8000970:	00411313 	.word	0x00411313
 
 08000974 <I2C_MasterSendData>:
-void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,
-                        uint8_t *pTxBuffer,
-                        uint32_t Len,
-                        uint8_t SlaveAddr,
-                        uint8_t Sr)
+
+
+// Master sends data in blocking mode
+void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxBuffer,uint32_t Len,uint8_t SlaveAddr,uint8_t Sr)
 {
  8000974:	b580      	push	{r7, lr}
  8000976:	b086      	sub	sp, #24
