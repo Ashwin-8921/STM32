@@ -1,0 +1,4 @@
+../drivers/src/stm32l4xx_adc_driver.c:4:6:delay1	16	static
+../drivers/src/stm32l4xx_adc_driver.c:10:6:adc_init	8	static
+../drivers/src/stm32l4xx_adc_driver.c:49:6:start_conversion	4	static
+../drivers/src/stm32l4xx_adc_driver.c:55:10:adc_read	4	static
