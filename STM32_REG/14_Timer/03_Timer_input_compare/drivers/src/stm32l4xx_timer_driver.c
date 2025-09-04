@@ -41,3 +41,29 @@ void timer2_pa5_output_compare(void)
 }
 
 
+
+void timer3_pa6_input_capture(void)
+{
+    RCC->AHB2ENR |= GPIOA_EN;             // Enable GPIOA clock
+
+    GPIOA->MODER &= ~(3U << 12);          // Clear mode bits for PA6
+    GPIOA->MODER |=  (2U << 12);          // Set PA6 to alternate function mode
+
+    GPIOA->AFR[0] &= ~(0xF << 24);        // Clear AF bits for PA6
+    GPIOA->AFR[0] |=  (2U << 24);         // Select AF2 (TIM3_CH1) for PA6
+
+    RCC->APB1ENR1 |= TIM3EN;              // Enable TIM3 clock
+
+    TIM3->PSC = 4 - 1;                   // Set prescaler: 16 MHz / 16 = 1 MHz timer clock
+
+    TIM3->CCMR1 &= ~(3U << 0);            // Clear CC1S bits
+    TIM3->CCMR1 |=  (1U << 0);            // Map TI1 input to channel 1 (input capture mode)
+
+    TIM3->CCER &= ~(1U << 1);             // Capture on rising edge (CC1P = 0)
+    TIM3->CCER |=  (1U << 0);             // Enable capture on channel 1
+
+    TIM3->CR1 = CR1_CEN;                  // Enable TIM3 counter
+}
+
+
+
