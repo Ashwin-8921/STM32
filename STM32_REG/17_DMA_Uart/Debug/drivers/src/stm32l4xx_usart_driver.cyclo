@@ -1,0 +1,12 @@
+../drivers/src/stm32l4xx_usart_driver.c:8:6:USART_PeriClockControl	12
+../drivers/src/stm32l4xx_usart_driver.c:61:6:USART_PeripheralControl	2
+../drivers/src/stm32l4xx_usart_driver.c:84:6:USART_Init	9
+../drivers/src/stm32l4xx_usart_driver.c:157:6:USART_SendData	6
+../drivers/src/stm32l4xx_usart_driver.c:204:6:USART_ReceiveData	6
+../drivers/src/stm32l4xx_usart_driver.c:253:9:USART_SendDataIT	2
+../drivers/src/stm32l4xx_usart_driver.c:284:9:USART_ReceiveDataIT	2
+../drivers/src/stm32l4xx_usart_driver.c:316:6:USART_IRQInterruptConfig	12
+../drivers/src/stm32l4xx_usart_driver.c:358:6:USART_IRQPriorityConfig	1
+../drivers/src/stm32l4xx_usart_driver.c:379:6:USART_IRQHandling	31
+../drivers/src/stm32l4xx_usart_driver.c:564:9:USART_GetFlagStatus	2
+../drivers/src/stm32l4xx_usart_driver.c:576:6:USART_ClearFlag	1
