@@ -3,8 +3,7 @@
 
 #define TIM2EN   (1U<<0)   // Enable TIM2 clock
 #define TIM3EN   (1U<<1)   // Enable TIM3 clock
-#define CR1_CEN  (1U<<0)   // Counter enable
-#define GPIOA_EN (1U<<0)   // Enable GPIOA clock
+
 
 void timer2_1hz_init(void)
 {
