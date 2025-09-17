@@ -225,7 +225,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x16 ./Src/syscalls.o
  .debug_macro   0x00000000       0xce ./Src/syscalls.o
  .debug_line    0x00000000      0x8a7 ./Src/syscalls.o
- .debug_str     0x00000000     0x99a7 ./Src/syscalls.o
+ .debug_str     0x00000000     0x99a6 ./Src/syscalls.o
  .comment       0x00000000       0x44 ./Src/syscalls.o
  .debug_frame   0x00000000      0x2ac ./Src/syscalls.o
  .ARM.attributes
@@ -290,7 +290,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x6a ./Src/sysmem.o
  .debug_macro   0x00000000      0x1df ./Src/sysmem.o
  .debug_line    0x00000000      0x583 ./Src/sysmem.o
- .debug_str     0x00000000     0x7745 ./Src/sysmem.o
+ .debug_str     0x00000000     0x7744 ./Src/sysmem.o
  .comment       0x00000000       0x44 ./Src/sysmem.o
  .debug_frame   0x00000000       0x34 ./Src/sysmem.o
  .ARM.attributes
@@ -1002,16 +1002,16 @@ LOAD C:/ST/STM32CubeIDE_1.19.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x00002047       0xc4 ./Src/main.o
  .debug_macro   0x0000210b       0x8a ./drivers/Src/stm32l4xx_gpio_driver.o
 
-.debug_line     0x00000000     0x1192
- .debug_line    0x00000000      0x6b2 ./Src/main.o
- .debug_line    0x000006b2       0x7b ./Startup/startup_stm32l476rgtx.o
- .debug_line    0x0000072d      0xa65 ./drivers/Src/stm32l4xx_gpio_driver.o
+.debug_line     0x00000000     0x1190
+ .debug_line    0x00000000      0x6b1 ./Src/main.o
+ .debug_line    0x000006b1       0x7b ./Startup/startup_stm32l476rgtx.o
+ .debug_line    0x0000072c      0xa64 ./drivers/Src/stm32l4xx_gpio_driver.o
 
-.debug_str      0x00000000     0x98a2
- .debug_str     0x00000000     0x98a2 ./Src/main.o
-                               0x9717 (size before relaxing)
- .debug_str     0x000098a2       0x76 ./Startup/startup_stm32l476rgtx.o
- .debug_str     0x000098a2     0x61c4 ./drivers/Src/stm32l4xx_gpio_driver.o
+.debug_str      0x00000000     0x98a1
+ .debug_str     0x00000000     0x98a1 ./Src/main.o
+                               0x9716 (size before relaxing)
+ .debug_str     0x000098a1       0x76 ./Startup/startup_stm32l476rgtx.o
+ .debug_str     0x000098a1     0x61c3 ./drivers/Src/stm32l4xx_gpio_driver.o
 
 .comment        0x00000000       0x43
  .comment       0x00000000       0x43 ./Src/main.o

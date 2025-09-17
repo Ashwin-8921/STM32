@@ -57,7 +57,7 @@ void SPI2_Inits(void)
 
 int main(void)
 {
-    uint8_t data=10;   // Data byte to send (value = 10)
+    uint8_t data=1;   // Data byte to send (value = 1)
 
     SPI2_GPIOInits();                    // Setup SPI2 GPIO pins
     SPI2_Inits();                        // Setup SPI2 peripheral
@@ -66,7 +66,7 @@ int main(void)
 
     while(1)                             // Infinite loop
     {
-        SPI_SendData(SPI2, &data, 1);    // Send 1 byte (value = 10)
+        SPI_SendData(SPI2, &data, 1);    // Send 1 byte (value = 1)
         while(SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG)); // Wait until SPI not busy
         delay();                         // Small delay between transfers
     }
